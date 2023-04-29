@@ -1,0 +1,17 @@
+
+
+
+onResize: 
+    > calculate Cell Column Count
+    > resetCellPositioner
+    > masonry. recomputeCellPosition
+
+renderAutoSizer:
+    >  
+
+initCellPositioner
+
+
+calculateColumnCount:
+    const {columnWidth, gutterSize} = this.state;
+    this._columnCount = Math.floor(this._width / (columnWidth + gutterSize));
