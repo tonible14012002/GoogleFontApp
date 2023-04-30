@@ -15,7 +15,7 @@ const SearchBar = () => {
     }
 
     return (
-        <div className={`${isFocus ? "bg-zinc-700": "bg-zinc-800 opacity-60"} transition-colors flex items-center relative`}>
+        <div className={`${isFocus&&"ring-4 bg-slate-100"} border bg-slate-50 transition-all flex items-center relative`}>
             <span className="block absolute w-10 text-zinc-400">
                 <FontAwesomeIcon className="block mx-auto" icon={faSearch}/>
             </span>

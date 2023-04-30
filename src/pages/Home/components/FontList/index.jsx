@@ -1,30 +1,96 @@
-import { Helmet } from "react-helmet"
 import { useFontContext } from "../../../../context/FontContext"
-import { googleStyleSheetUrlGenerator } from "../../../../utils"
 import FontCard from "./FontCard"
-import { memo, useEffect, useMemo } from "react"
+import { memo, useLayoutEffect, useState } from "react"
+import { AutoSizer, CellMeasurer, CellMeasurerCache, Grid, WindowScroller } from "react-virtualized"
+import { useRef } from "react"
+import 'react-virtualized/styles.css';
 
-const MAX_URL_SIZE = 204
+
 
 const FontList = ({
-    fontSize,
+    fontSize=20,
     previewText,
 }) => {
-    const { fonts } = useFontContext()
 
-    console.log('rerender List')
-    return (
-        <div>
-            <ul className="grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 ">
-                {fonts?.slice(0,1000).map((fontData) => (
+    const { fonts } = useFontContext()
+    const gridRef = useRef()
+    const [ screenWidth, setScreenWidth ] = useState(1000)
+
+    const cache = useRef(new CellMeasurerCache({
+        // keyMapper: (rowIndex, columnIndex) => fonts[rowIndex * 3 + columnIndex].family,
+        defaultHeight: 400,
+        fixedWidth: true
+    }))
+
+    const handleCellRender = ({columnIndex, key, rowIndex, style, parent}) => {
+        const fontIndex = rowIndex * 3 + columnIndex
+        if (fontIndex >= fonts.length) return null
+        const fontData = fonts[fontIndex]
+        return (
+            <CellMeasurer
+                cache={cache.current}
+                columnIndex={columnIndex}
+                rowIndex={rowIndex}
+                key={key}
+                parent={parent}
+            >
+                <div
+                    style={style}
+                    className="p-4 min-h-[300px]"
+                >
                     <FontCard
+                        data={fontData}
                         previewText={previewText}
                         fontSize={fontSize}
-                        key={fontData.family}
-                        data={fontData}
                     />
-                ))}
-            </ul>
+                </div>
+            </CellMeasurer>
+        )
+    }
+
+    useLayoutEffect(() => {
+        cache.current.clearAll()
+        gridRef.current && gridRef.current.recomputeGridSize()
+    }, [previewText, screenWidth, fontSize])
+
+    return (
+        <div className="w-full">
+            <div className="m-auto">
+
+        <WindowScroller
+            autoContainerWidth
+        >
+            {({height, scrollTop, onChildScroll}) => {
+                return (
+                    <AutoSizer 
+                        disableHeight
+                        autoContainerWidth
+                        onResize={({width}) => setScreenWidth(width)}
+                    >
+                        {({width}) => {
+                            return (
+                                    <Grid
+                                        ref={ref => gridRef.current = ref}
+                                        autoContainerWidth
+                                        autoHeight
+                                        height={height}
+                                        width={width}
+                                        columnWidth={screenWidth / 3}
+                                        columnCount={3}
+                                        overscanRowCount={10}
+                                        scrollTop={scrollTop}
+                                        onScroll={onChildScroll}
+                                        cellRenderer={handleCellRender}
+                                        rowHeight={cache.current.rowHeight}
+                                        rowCount={fonts.length / 3 + 1}
+                                    />
+                            )
+                        }}
+                    </AutoSizer>
+                )
+            }}
+        </WindowScroller>
+            </div>
         </div>
     )
 }

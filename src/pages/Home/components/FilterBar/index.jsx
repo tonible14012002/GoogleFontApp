@@ -1,11 +1,11 @@
+import { memo } from "react"
 
-
-const FilterBar = () => {
+const FilterBar = ({...props}) => {
     return (
-        <div>
-        Filter bar
+        <div className=" bg-zinc-200">
+
         </div>
     )
 }
 
-export default FilterBar
+export default memo(FilterBar)

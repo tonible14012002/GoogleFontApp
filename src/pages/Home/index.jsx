@@ -3,10 +3,11 @@ import FilterBar from "./components/FilterBar"
 import FontList from "./components/FontList"
 import ToolBar from "./components/ToolBar"
 import { useCallback } from "react"
+import ContentLayout from "../../components/ContentLayout"
 
 const Home = () => {
 
-    const [ fontSize, setFontSize ] = useState(24)
+    const [ fontSize, setFontSize ] = useState(0)
     const [ previewText, setPreviewText ] = useState("")
     
     const handleSetPreviewText = useCallback((value) => {
@@ -24,12 +25,14 @@ const Home = () => {
             <ToolBar
                 setPreviewText={handleSetPreviewText}
                 setFontSize={handleSetFontSize}
+                // fontSize={fontSize}
             />
-            {/* <FilterBar/> */}
-            <FontList
-                fontSize={fontSize}
-                previewText={previewText}
-            />
+            <ContentLayout>
+                <FontList
+                    fontSize={fontSize}
+                    previewText={previewText}
+                />
+            </ContentLayout>
         </>
     )
 }

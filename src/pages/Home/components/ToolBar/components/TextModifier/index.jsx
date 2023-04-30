@@ -1,11 +1,15 @@
-import { useCallback, useReducer, useRef, useState } from "react"
+import { useCallback, useRef, useState, useEffect } from "react"
+import { Tooltip } from "react-tooltip"
+import { memo } from "react"
+
 import EButton from "../../../../../../components/EButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import useOnClickOutside from "../../../../../../hooks/useOnClickOutside"
-import { Tooltip } from "react-tooltip"
-import { memo } from "react"
-import { useEffect } from "react"
+import SelectorOption from "../../../../../../components/SelectorOption"
+import Selector from "../../../../../../components/Selector"
+
+
 
 const PREVIEW_MODE=[
     'Custom',
@@ -21,104 +25,72 @@ const TextModifier = ({
 
 }) => {
 
-    const [ modeId, setModeId ] = useState(1)
-    const [ showSelector, setShowSelector ] = useState(false)
+    const [ mode, setMode ] = useState(PREVIEW_MODE[1])
+    const [ isFocus, setIsFocus ] = useState(false)
     const [ value, setValue ] = useState("")
 
-    const wrapperRef = useRef()
-
-    const handleOptionPress = useCallback((id) => {
-        setModeId(id)
-    }, [])
-
-    const handleToggleSelector = () => {
-        setShowSelector(prev => !prev)
+    const handleInputFocus = () => {
+        setIsFocus(true)
+    }
+    const handleInputBlur = () => {
+        setIsFocus(false)
     }
 
-    const handleHideSelector = () => {
-        setShowSelector(false)
+    const handleOptionSelect = (value) => {
+        setMode(value)
     }
 
     const handleInputChange = (e) => {
-        setModeId(0)
+        // set Sentence mode if input empty after delete
+        if (value && !e.target.value) {
+            setMode(PREVIEW_MODE[1])
+        }
+        else{
+            setMode(PREVIEW_MODE[0])
+        }
         setValue(e.target.value)
         setPreviewText(e.target.value)
     }
 
-    console.log('text modifier rerender')
-
     const handlePreviewModeChange = () => {
-        setValue('')
-        switch (modeId) {
-            case 0:
+        switch (mode) {
+            case PREVIEW_MODE[0]:
                 setPreviewText('')
                 break
-            case 1:
+            case PREVIEW_MODE[1]:
+                setValue('')
                 setPreviewText(DEFAULT_SENTENCE)
                 break
-            case 2: 
+            case PREVIEW_MODE[2]: 
+                setValue('')
                 setPreviewText(DEFAULT_PARAGRAPH)
                 break
-
         }
     }
 
-    useOnClickOutside(wrapperRef, handleHideSelector)
-    useEffect(handlePreviewModeChange, [modeId, setPreviewText])
+    useEffect(handlePreviewModeChange, [mode, setPreviewText])
 
+    console.log('render Text Modifier')
     return (
-        <div className="h-full flex items-center ml-2 grow">
-            <div className="relative h-10 mr-1 min-w-[100px]"
-                ref={wrapperRef}
-            >
-                <EButton
-                    data-tooltip-id="preview-tooltip"
-                    data-tooltip-content="Update preview select"
-                    className="px-2 bg-zinc-800 hover:opacity-80 transition-opacity h-full text-left flex min-w-[120px] justify-between items-center"
-                    onClick={handleToggleSelector}
-                >
-                    <span>{PREVIEW_MODE[modeId]}</span>
-                    <span className="text-xs">
-                        <FontAwesomeIcon icon={faChevronDown}/>
-                    </span>
-                </EButton>
-
-                {!showSelector &&
-                <Tooltip id="preview-tooltip" />}
-
-                {showSelector && 
-                <ul className="absolute top-14 w-[140px] flex flex-col bg-zinc-800">
-                    {PREVIEW_MODE.map((mode, index) => (
-                        <PreviewOption
-                            isSelected={modeId === index}
-                            onSelect={handleOptionPress}
-                            id={index}
-                        >
-                            {mode}
-                        </PreviewOption>
-                    ))}
-                </ul>}
-            </div>
-            <input className="outline-none px-4 h-full bg-zinc-800 grow" 
+        <div className={`h-full flex items-center grow bg-slate-50 ${isFocus && "ring-4 bg-slate-100"} border`}>
+            <Selector
+                buttonClassName="w-[100px]"
+                items={PREVIEW_MODE}
+                keyExtractor={item => item}
+                valueExtractor={item => item}
+                onSelect={handleOptionSelect}
+                textExtractor={item => item}
+                isSelected={item => item === mode}
+                currentValue={mode}
+            />
+            <input className="outline-none pr-4 h-full grow bg-transparent" 
                 onChange={handleInputChange}
                 value={value}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
             />
         </div>
     )
 }
 
 export default memo(TextModifier)
-
-const PreviewOption = ({onSelect, id, isSelected, children}) => {
-    const handleButtonPress = () => {
-        onSelect(id)
-    }
-
-    return (
-        <EButton className={`px-4 py-2 text-left hover:bg-zinc-700 transition-all active:opacity-70 ${isSelected && "bg-zinc-600"}`}
-            onClick={handleButtonPress}
-        >
-            {children}
-        </EButton>
-    )
-}

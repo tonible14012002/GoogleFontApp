@@ -6,6 +6,7 @@ import { useEffect, useMemo } from "react"
 import EButton from "../../components/EButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons"
+import ContentLayout from "../../components/ContentLayout"
 
 const FontDetail = () => {
 
@@ -35,7 +36,7 @@ const FontDetail = () => {
     }, [styleUrl])
 
     return (
-        <div className="mt-4">
+        <ContentLayout className="mt-4">
             <div className="flex justify-between">
                 <h3 className="text-3xl">{fontDetail.family}</h3>
                 <EButton className="p-2 px-4 font-medium text-sm bg-amber-200 hover:bg-amber-300 active:opacity-70 transition-all text-zinc-800">
@@ -45,10 +46,10 @@ const FontDetail = () => {
             <div className="mt-10">
                 <h3 className="text-2xl">Styles</h3>
                 <div className="flex mt-4 gap-4">
-                    <div className="flex-1 bg-zinc-800">
-                        <input className="w-full h-full bg-transparent outline-none px-6 py-4 focus:ring-4 ring-amber-200 ring-opacity-70 transition-all"/>
+                    <div className="flex-1 bg-slate-100">
+                        <input className="w-full h-full bg-transparent outline-none px-6 py-4 focus:ring-4 ring-opacity-70 transition-all"/>
                     </div>
-                    <div className="w-full max-w-[200px] laptop:max-w-[500px] bg-zinc-700">
+                    <div className="w-full max-w-[200px] laptop:max-w-[500px] bg-slate-100">
                         slider
                     </div>
                 </div>
@@ -66,7 +67,7 @@ const FontDetail = () => {
                 ))}
             </div>
 
-        </div>
+        </ContentLayout>
     )
 }
 
@@ -81,7 +82,7 @@ const FontVariant = ({
     const fontWeight = variant.replace('italic', '')
 
     return (
-    <div className="py-4 w-full relative border-y border-zinc-600 text-zinc-300">
+    <div className="py-4 w-full relative text-zinc-800">
             <span className="text-sm font-medium text-zinc-500">{fontWeight} {fontStyle}</span>
             <h3 className="overflow-hidden mr-[200px]"
                 style={{fontSize, fontFamily, fontStyle, fontWeight}}

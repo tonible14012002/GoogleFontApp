@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useEffect } from "react"
 import EButton from "../../../../../components/EButton"
 import { addPlusSigns } from "../../../../../utils"
 
@@ -6,19 +6,19 @@ const FontCard = ({
     data,
     previewText,
     fontSize=14,
-    style
 }) => {
 
-    const { category, family, files, menu, subsets, variants } = data
+    const { family, category, variants } = data
 
     return (
-        <EButton className="border border-zinc-700 m-4 min-h-[300px] p-4 rounded-xl" style={style}
+        <EButton className="hover:bg-slate-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
             to={`specimen/${addPlusSigns(family)}`}
         >
             <div className="flex justify-between">
-                <span className="text-xl">{family}</span>
+                <h3 className="">{family}</h3>
                 <span className="text-zinc-400 text-sm font-medium">{variants.length} styles</span>
             </div>
+            <h3 className="text-sm opacity-60">{category}</h3>
             <p className="h-full mt-6 break-words" 
                 style={{
                     fontSize,
