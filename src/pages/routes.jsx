@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import pagesData from "./pagesData"
 import DefaultLayout from "../layouts/DefaultLayout"
 import { FontProvider } from "../context/FontContext"
+import { FontCollectionProvider } from "../context/FontCollectionContext"
 
 
 
@@ -24,11 +25,13 @@ const Router = () => {
     })
 
     return (
-        <FontProvider>
-            <Routes>
-                    {pageRoutes}
-            </Routes>
-        </FontProvider>
+        <FontCollectionProvider>
+            <FontProvider>
+                <Routes>
+                        {pageRoutes}
+                </Routes>
+            </FontProvider>
+        </FontCollectionProvider>
     )
 }
 

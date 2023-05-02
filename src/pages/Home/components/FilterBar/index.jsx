@@ -26,9 +26,10 @@ const FilterBar = () => {
     const handleSelectCategory = (updateCategory) => {
         const newCategories = updateCategory(categories)
 
-        newCategories.length === CATEGORY_CHOICES_VALUES.length ? 
+        !newCategories.length ? 
         searchParams.delete("category") :
         searchParams.set("category", newCategories)
+        console.log(newCategories)
 
         setSearchParams(searchParams)
     }
@@ -53,7 +54,7 @@ const FilterBar = () => {
         if (!isCategoryParamValid) {
             searchParams.set("category", categoriesString)
             setSearchParams(searchParams)
-    }
+        }
     }, [isCategoryParamValid, setSearchParams , searchParams, categoriesString])
 
     console.log('rerender Filter bar')
@@ -109,7 +110,7 @@ const MultipleSelector = ({
         setShowOptions(prev => !prev)
     }
 
-    const handleOptionsPress = (value, index) => {
+    const handleOptionsPress = (_, index) => {
         if (selectedIds.includes(index)) {
             setSelectedIds(prev => prev.filter(id => id !== index))
             onSelect(prev => prev.filter(val => val !== items[index]))

@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react"
+import { memo, useState } from "react"
 
 import { faRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -24,11 +24,9 @@ const ToolBar = ({
         setSearchParams({})
     }
 
-    console.log('rerender Toolbar')
-
     return (
-        <div className="w-full bg-white border-y h-[80px] gap-4 sticky z-50 top-0 py-4 shadow-sm">
-            <ContentLayout className=" grid grid-cols-[1fr_1fr_1fr_50px] gap-4">
+        <div className="w-full bg-white border-y h-[70px] sticky z-50 top-0 shadow-sm flex items-center px-4">
+            <ContentLayout className="grid grid-cols-[1fr_1fr_1fr_50px] gap-4 h-[50px] w-full">
                 <SearchBar
                     resetSwitch={resetSwitch}
                 />

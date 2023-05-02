@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react"
 import Selector from "../../../../../../components/Selector"
-
-const SIZE_CHOICES_VALUE = [
-    8,12,14,20,24,32,40,64,96,120,184,280
-]
+import { SIZE_CHOICES_VALUE, DEFAULT_SIZE_CHOICE } from "../../../../../utils/FontPreview"
 
 const SizeModifier = ({setValue: setFontSize, resetSwitch}) => {
 
-    const [ value, setValue ] = useState(24)
+    const [ value, setValue ] = useState(SIZE_CHOICES_VALUE)
 
     const handleInputChange = (e) => {
         setValue(Number(e.target.value))
@@ -23,12 +20,11 @@ const SizeModifier = ({setValue: setFontSize, resetSwitch}) => {
     }, [value, setFontSize])
 
     useEffect(() => {
-        setValue(24)
+        setValue(DEFAULT_SIZE_CHOICE)
     }, [resetSwitch, setFontSize])
 
-    console.log('render  Modifier')
     return (
-        <div className=" bg-slate-50 grow border flex items-center pl-2 pr-4">
+        <div className=" bg-slate-50 grow border flex items-center pl-2 pr-4 h-full">
             <Selector
                 className="overflow-y-auto max-h-[200px]"
                 optionClassName="min-h-[40px]"

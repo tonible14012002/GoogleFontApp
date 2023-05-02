@@ -1,7 +1,6 @@
-import { memo, useEffect } from "react"
-import EButton from "../../../../../components/EButton"
-import { addPlusSigns } from "../../../../../utils"
-// import { Helmet } from "react-helmet"
+import { memo, useLayoutEffect } from "react"
+import EButton from "../../../../../../components/EButton"
+import { addPlusSigns } from "../../../../../../utils"
 
 const FontCard = ({
     data,
@@ -11,11 +10,21 @@ const FontCard = ({
 
     const { family, category, variants } = data
 
+    // useLayoutEffect(() => {
+    //     const link = document.createElement("link")
+    //     link.href = `https://fonts.googleapis.com/css?family=${family}`
+    //     link.rel = "stylesheet"
+    //     document.head.appendChild(link)
+    //     return () => {
+    //         document.head.removeChild(link)
+    //     }
+    // }, [family])
+
     return (
         <>
-        {/* <Helmet>
-            <link href={`https://fonts.googleapis.com/css?family=${family}`} rel="stylesheet" />
-        </Helmet> */}
+        {/* <Helmet> */}
+            {/* <link href={`https://fonts.googleapis.com/css?family=${family}`} rel="stylesheet" /> */}
+        {/* </Helmet> */}
         <EButton className="hover:bg-slate-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
             to={`specimen/${addPlusSigns(family)}`}
         >

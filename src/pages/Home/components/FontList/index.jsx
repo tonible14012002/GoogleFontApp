@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { useMemo, memo, useRef, useLayoutEffect, useState, useCallback, useEffect } from "react"
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, Grid, WindowScroller } from "react-virtualized"
-import FontCard from "./FontCard"
+import FontCard from "./components/FontCard"
 import { DEFAULT_LANGUAGE_FILTER_VALUE, getFilterLanguageFromParam } from "../../utils/Languages"
 import { CATEGORY_CHOICES_VALUES, getCategoriesFromParam } from "../../utils/Category";
 import { getQueryFromParam } from "../../utils/Query"
@@ -124,27 +124,22 @@ const FontList = ({
                         autoContainerWidth
                         onResize={handleResize}
                     >
-                        {({width}) => {
-                            console.log('scrollTop', scrollTop)
-                            return (
-                                <Grid
-                                    ref={ref => gridRef.current = ref}
-                                    autoContainerWidth
-                                    autoHeight
-                                    height={height}
-                                    width={width}
-                                    columnWidth={columnWidth}
-                                    columnCount={columnCount}
-                                    scrollTop={scrollTop}
-                                    onScroll={onChildScroll}
-                                    cellRenderer={handleCellRender}
-                                    rowHeight={cache.current.rowHeight}
-                                    rowCount={rowCount}
-                                    // scrollToColumn={-1}
-                                    // scrollToRow={-1}
-                                />
-                            )
-                        }}
+                        {({width}) => (
+                            <Grid
+                                ref={ref => gridRef.current = ref}
+                                autoContainerWidth
+                                autoHeight
+                                height={height}
+                                width={width}
+                                columnWidth={columnWidth}
+                                columnCount={columnCount}
+                                scrollTop={scrollTop}
+                                onScroll={onChildScroll}
+                                cellRenderer={handleCellRender}
+                                rowHeight={cache.current.rowHeight}
+                                rowCount={rowCount}
+                            />
+                        )}
                     </AutoSizer>
                 )
             }}
