@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import Selector from "../../../../../../components/Selector"
 
-const SIZE_CHOICES = [
+const SIZE_CHOICES_VALUE = [
     8,12,14,20,24,32,40,64,96,120,184,280
 ]
 
-const SizeModifier = ({setValue: setFontSize}) => {
+const SizeModifier = ({setValue: setFontSize, resetSwitch}) => {
 
     const [ value, setValue ] = useState(24)
 
@@ -17,27 +17,26 @@ const SizeModifier = ({setValue: setFontSize}) => {
     const handleSelectorOnSelect = (value) => {
         setValue(value)
     }
-    const handleSelectorKeyExtract = (item) => item
-    const handleSelectorValueExtract = (item) => item
-    const hanldeCheckIsSelected = (item) => value === item
 
     useEffect(() => {
         setFontSize(value)
     }, [value, setFontSize])
 
-    console.log('render Size Modifier')
+    useEffect(() => {
+        setValue(24)
+    }, [resetSwitch, setFontSize])
+
+    console.log('render  Modifier')
     return (
         <div className=" bg-slate-50 grow border flex items-center pl-2 pr-4">
             <Selector
                 className="overflow-y-auto max-h-[200px]"
                 optionClassName="min-h-[40px]"
-                items={SIZE_CHOICES}
-                keyExtractor={handleSelectorKeyExtract}
-                valueExtractor={handleSelectorValueExtract}
-                textExtractor={handleSelectorValueExtract}
+                items={SIZE_CHOICES_VALUE}
+                displayItems={SIZE_CHOICES_VALUE}
                 onSelect={handleSelectorOnSelect}
-                isSelected={hanldeCheckIsSelected}
                 currentValue={value}
+                absoluteDisplay={value+ " px"}
             />
             <div className="grow h-full px-4 flex items-center">
                 <input

@@ -22,7 +22,7 @@ const DEFAULT_PARAGRAPH = "No one shall be subjected to arbitrary arrest, detent
 
 const TextModifier = ({
     setPreviewText,
-
+    resetSwitch
 }) => {
 
     const [ mode, setMode ] = useState(PREVIEW_MODE[1])
@@ -68,6 +68,10 @@ const TextModifier = ({
         }
     }
 
+    useEffect(() => {
+        setMode(PREVIEW_MODE[1])
+    }, [resetSwitch, setPreviewText])
+
     useEffect(handlePreviewModeChange, [mode, setPreviewText])
 
     console.log('render Text Modifier')
@@ -76,11 +80,8 @@ const TextModifier = ({
             <Selector
                 buttonClassName="w-[100px]"
                 items={PREVIEW_MODE}
-                keyExtractor={item => item}
-                valueExtractor={item => item}
+                displayItems={PREVIEW_MODE}
                 onSelect={handleOptionSelect}
-                textExtractor={item => item}
-                isSelected={item => item === mode}
                 currentValue={mode}
             />
             <input className="outline-none pr-4 h-full grow bg-transparent" 

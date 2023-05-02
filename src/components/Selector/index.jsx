@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
@@ -7,22 +7,19 @@ import SelectorOption from "../SelectorOption"
 import EButton from "../EButton"
 
 const Selector = ({
-    items,
+    items=[],
+    displayItems=[],
     onSelect,
-    isSelected,
-    keyExtractor,
-    valueExtractor,
-    textExtractor,
     className,
     optionClassName,
     buttonClassName,
-    defaultValue,
     currentValue,
+    absoluteDisplay,
     ...props
 }) => {
 
     const [ showOptions, setShowOptions ] = useState(false)
-    const [ value, setValue ] = useState(defaultValue)
+    const [ id, setId ] = useState(0)
     const wrapperRef = useRef()
 
     const handleClose = () => {
@@ -33,43 +30,45 @@ const Selector = ({
         setShowOptions(prev => !prev)
     }
 
-    const handleOptionsPress = (optionValue) => {
-        setValue(optionValue)
+    const handleOptionsPress = (optionValue, index) => {
+        setId(index)
         onSelect(optionValue)
+        setShowOptions(false)
     }
 
     const updateValueChange = () => {
-        setValue(currentValue)
+        const index = items.indexOf(currentValue)
+        setId(index)
     }
 
-    useEffect(updateValueChange, [currentValue])
+    useEffect(updateValueChange, [currentValue, items])
     useOnClickedOutSide(wrapperRef, handleClose)
 
     return (
-        <div className="relative"
+        <div className="relative w-fit"
             ref={wrapperRef}
         >
             <EButton className={`flex items-center justify-between p-2 text-sm min-w-[80px] hover:bg-slate-100 ${buttonClassName}`}
                 onClick={handleToggleSelector}
             >
-                <span>{value}</span>
+                <span>{absoluteDisplay || (id > -1 ? displayItems[id] : "")}</span>
                 <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
             </EButton>
             {showOptions &&
-            <ul className={`bg-white shadow-md min-w-[100px] flex flex-col absolute left-0 top-10 overflow-y-auto ${className}`}
+            <ul className={`bg-white shadow-md min-w-[100px] flex flex-col absolute left-0 top-10 overflow-y-auto z-20 ${className}`}
                 {...props}
             >
                 {items.map((item, index) => {
-                    let key = keyExtractor ? keyExtractor(item) : index
                     return (
                     <SelectorOption
                         className={optionClassName}
-                        key={key}
-                        value={valueExtractor(item, index)}
-                        isSelected={ isSelected ? isSelected(item, index) : false}
+                        key={index}
+                        index={index}
+                        value={item}
+                        isSelected={id === index}
                         onSelect={handleOptionsPress}
                     >
-                        {textExtractor(item)}
+                        {displayItems[index]}
                     </SelectorOption>
                 )})}
             </ul>}

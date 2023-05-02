@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import * as FontServices from "../../services/fontServices";
-import { Helmet } from "react-helmet";
 import { googleStyleSheetUrlGenerator } from "../../utils"
 
 
@@ -12,14 +11,20 @@ const FontProvider = ({children}) => {
 
     const [ fonts, setFonts ] = useState()
     const [ loading, setLoading ] = useState(true)
+    const [ error, setError ] = useState(false)
 
     const params =  useMemo(() => googleStyleSheetUrlGenerator(fonts || []), [fonts])
 
     const handleGetFonts = () => {
         const fetchFonts = async () => {
             setLoading(true)
-            const data = await FontServices.getFonts()
-            setFonts(data.items)
+            const result = await FontServices.getFonts()
+            if (result.status === 'ok') {
+                setFonts(result.data.items)
+            }
+            else {
+                setError(true)
+            }
             setLoading(false)
         }
         fetchFonts()
@@ -45,6 +50,7 @@ const FontProvider = ({children}) => {
         >
             {loading ?
             <div className="w-full h-[100vh] overflow-hidden bg-zinc-900">Loading</div>:
+            error ? <div>There are some error when loading font from google api</div>:
             children}
         </FontContext.Provider>
     )
