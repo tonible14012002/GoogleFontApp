@@ -51,7 +51,6 @@ const FilterBar = () => {
 
     useEffect(() => {
         if (!isCategoryParamValid) {
-            console.log('reset valid params')
             searchParams.set("category", categoriesString)
             setSearchParams(searchParams)
     }

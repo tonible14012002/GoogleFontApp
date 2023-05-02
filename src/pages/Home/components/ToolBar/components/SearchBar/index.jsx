@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
@@ -13,6 +13,7 @@ const SearchBar = ({resetSwitch}) => {
     const [ query ] = getQueryFromParam(searchParams)
     const [ value, setValue ] = useState(query.replace("+", " "))
     const debouncedValue = useDebounce(value, 300)
+    const ignoreDebounce = useRef(false)
 
     const handleInputChange = (e) => {
         setValue(e.target.value)
@@ -26,10 +27,17 @@ const SearchBar = ({resetSwitch}) => {
     }
 
     useEffect(()=>{
+        console.log("reset")
         setValue("")
+        ignoreDebounce.current = true
     }, [resetSwitch])
 
     useEffect(() => {
+        console.log("update query to debouce value")
+        if (ignoreDebounce.current) {
+            ignoreDebounce.current = false
+            return
+        }
         if (query !== debouncedValue) {
             debouncedValue ?
             searchParams.set("query", debouncedValue.replace(" ", "+").toLowerCase()) :
@@ -39,6 +47,8 @@ const SearchBar = ({resetSwitch}) => {
         }
     }, [debouncedValue, searchParams, setSearchParams, query])
 
+
+    console.log("rerender search bar")
     return (
         <div className={`${isFocus&&"ring-4 bg-slate-100"} border bg-slate-50 transition-all flex items-center relative`}>
             <span className="block absolute w-10 text-zinc-400">

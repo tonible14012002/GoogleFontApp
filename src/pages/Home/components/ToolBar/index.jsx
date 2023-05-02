@@ -29,7 +29,9 @@ const ToolBar = ({
     return (
         <div className="w-full bg-white border-y h-[80px] gap-4 sticky z-50 top-0 py-4 shadow-sm">
             <ContentLayout className=" grid grid-cols-[1fr_1fr_1fr_50px] gap-4">
-                <SearchBar />
+                <SearchBar
+                    resetSwitch={resetSwitch}
+                />
                 <TextModifier
                     setPreviewText={setPreviewText}
                     resetSwitch={resetSwitch}

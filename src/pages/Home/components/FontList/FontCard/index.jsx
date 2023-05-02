@@ -1,6 +1,7 @@
 import { memo, useEffect } from "react"
 import EButton from "../../../../../components/EButton"
 import { addPlusSigns } from "../../../../../utils"
+// import { Helmet } from "react-helmet"
 
 const FontCard = ({
     data,
@@ -11,6 +12,10 @@ const FontCard = ({
     const { family, category, variants } = data
 
     return (
+        <>
+        {/* <Helmet>
+            <link href={`https://fonts.googleapis.com/css?family=${family}`} rel="stylesheet" />
+        </Helmet> */}
         <EButton className="hover:bg-slate-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
             to={`specimen/${addPlusSigns(family)}`}
         >
@@ -28,6 +33,7 @@ const FontCard = ({
                 {previewText}
             </p>
         </EButton>
+        </>
     )
 }
 
