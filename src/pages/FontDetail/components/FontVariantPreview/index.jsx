@@ -35,7 +35,7 @@ const FontVariantPreview = ({
     return (
         <div className="py-12 w-full relative text-zinc-800 first:border-t-2 border-b-2">
             <span className=" absolute left-0 top-4 text-sm font-medium text-zinc-500">{fontWeightName} {fontWeight} {fontStyleName}</span>
-            <h3 className="overflow-hidden mr-[200px]  whitespace-nowrap"
+            <h3 className="overflow-hidden mr-[100px] laptop:mr-[200px]  whitespace-nowrap"
                 style={{fontSize, fontFamily, fontStyle, fontWeight}}
             >
                 {previewText}

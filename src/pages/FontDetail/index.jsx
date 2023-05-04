@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useFontContext } from "../../context/FontContext"
-import { useLayoutEffect, useMemo, useState } from "react"
+import { useLayoutEffect, useEffect, useMemo, useState } from "react"
 import EButton from "../../components/EButton"
 import ContentLayout from "../../components/ContentLayout"
 import FontVariantPreview from "./components/FontVariantPreview"
@@ -38,6 +38,9 @@ const FontDetail = () => {
         return () => document.head.removeChild(link)
     }, [styleUrl])
 
+    useEffect(() => {
+        document.title = family
+    }, [family])
     return (
         <>
         <div className="bg-slate-50 border h-[70px] sticky top-0 z-30">

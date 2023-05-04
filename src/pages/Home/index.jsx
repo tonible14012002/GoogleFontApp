@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import FontList from "./components/FontList"
 import ToolBar from "./components/ToolBar"
 import ContentLayout from "../../components/ContentLayout"
@@ -19,6 +19,10 @@ const Home = () => {
             }
         })
     })
+
+    useEffect(() => {
+        document.title = "Home"
+    }, [])
 
     console.log('rerender Home')
     return (
