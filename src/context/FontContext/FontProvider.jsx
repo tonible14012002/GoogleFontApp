@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import * as FontServices from "../../services/fontServices";
 import { googleStyleSheetUrlGenerator } from "../../utils"
+import WelcomePage from "../../pages/WelcomePage";
 
 
 const FontContext = createContext()
@@ -48,10 +49,11 @@ const FontProvider = ({children}) => {
         <FontContext.Provider
             value={{fonts, loading}}
         >
-            {loading ?
-            <div className="w-full h-[100vh] overflow-hidden bg-zinc-900">Loading</div>:
-            error ? <div>There are some error when loading font from google api</div>:
-            children}
+            {loading
+            ? <WelcomePage/>
+            : error
+            ? <div>There are some error when loading font from google api</div>
+            : children}
         </FontContext.Provider>
     )
 }

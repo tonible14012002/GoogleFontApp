@@ -27,13 +27,11 @@ const SearchBar = ({resetSwitch}) => {
     }
 
     useEffect(()=>{
-        console.log("reset")
         setValue("")
         ignoreDebounce.current = true
     }, [resetSwitch])
 
     useEffect(() => {
-        console.log("update query to debouce value")
         if (ignoreDebounce.current) {
             ignoreDebounce.current = false
             return
@@ -48,9 +46,8 @@ const SearchBar = ({resetSwitch}) => {
     }, [debouncedValue, searchParams, setSearchParams, query])
 
 
-    console.log("rerender search bar")
     return (
-        <div className={`${isFocus&&"ring-4 bg-slate-100"} border bg-slate-50 transition-all flex items-center relative`}>
+        <div className={`${isFocus&&"ring-4 bg-slate-100"} border bg-slate-50 transition-all flex items-center relative h-[50px] flex-1`}>
             <span className="block absolute w-10 text-zinc-400">
                 <FontAwesomeIcon className="block mx-auto" icon={faSearch}/>
             </span>

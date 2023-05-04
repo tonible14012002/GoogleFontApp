@@ -25,7 +25,7 @@ const FontCard = ({
         {/* <Helmet> */}
             {/* <link href={`https://fonts.googleapis.com/css?family=${family}`} rel="stylesheet" /> */}
         {/* </Helmet> */}
-        <EButton className="hover:bg-slate-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
+        <EButton className="hover:bg-blue-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
             to={`specimen/${addPlusSigns(family)}`}
         >
             <div className="flex justify-between">

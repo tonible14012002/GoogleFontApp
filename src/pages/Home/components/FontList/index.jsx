@@ -1,12 +1,17 @@
 import { useFontContext } from "../../../../context/FontContext"
 import { useSearchParams } from "react-router-dom"
-import { useMemo, memo, useRef, useLayoutEffect, useState, useCallback, useEffect } from "react"
+import { useMemo, memo, useRef, useLayoutEffect, useState, useCallback } from "react"
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, Grid, WindowScroller } from "react-virtualized"
 import FontCard from "./components/FontCard"
 import { DEFAULT_LANGUAGE_FILTER_VALUE, getFilterLanguageFromParam } from "../../utils/Languages"
 import { CATEGORY_CHOICES_VALUES, getCategoriesFromParam } from "../../utils/Category";
 import { getQueryFromParam } from "../../utils/Query"
+import EButton from "../../../../components/EButton"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons"
+import Modal from "../../../../components/Modal"
+import { useFontCollection } from "../../../../context/FontCollectionContext/CollectionProvider"
 
 const FontList = ({
     fontSize=20,
@@ -14,7 +19,10 @@ const FontList = ({
 }) => {
 
     const { fonts } = useFontContext()
+    const { showCollection } = useFontCollection()
+
     const gridRef = useRef()
+    const windowScrollerRef = useRef()
     const [ columnCount, setColumnCount ] = useState(3)
     const [ columnWidth, setColumnWidth ] = useState(400)
 
@@ -29,7 +37,7 @@ const FontList = ({
     const [ query ] = getQueryFromParam(searchParams)
 
     const categoriesFilterString = categoriesFilter.join(",")
-    // 
+
     const filteredFonts = useMemo(() => {
         const cateFilter = categoriesFilterString.split(",")
         let cateFilterEach
@@ -80,11 +88,9 @@ const FontList = ({
         gridRef.current && gridRef.current.recomputeGridSize()
     }
 
-    useEffect(() => {
-        console.log('asdasd', languageFilter)    
-    }, [languageFilter])
-
-    useLayoutEffect(handleUpdateCache, [previewText, fontSize])
+    const handleScrollTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     const handleCellRender = ({columnIndex, key, rowIndex, style, parent}) => {
         const fontIndex = rowIndex * 3 + columnIndex
@@ -112,38 +118,48 @@ const FontList = ({
         )
     }
 
+    useLayoutEffect(handleUpdateCache, [previewText, fontSize])
+
     return (
         <div className="w-full mb-14">
-        <WindowScroller
-            autoContainerWidth
-        >
-            {({height, scrollTop, onChildScroll}) => {
-                return (
-                    <AutoSizer 
-                        disableHeight
-                        autoContainerWidth
-                        onResize={handleResize}
-                    >
-                        {({width}) => (
-                            <Grid
-                                ref={ref => gridRef.current = ref}
-                                autoContainerWidth
-                                autoHeight
-                                height={height}
-                                width={width}
-                                columnWidth={columnWidth}
-                                columnCount={columnCount}
-                                scrollTop={scrollTop}
-                                onScroll={onChildScroll}
-                                cellRenderer={handleCellRender}
-                                rowHeight={cache.current.rowHeight}
-                                rowCount={rowCount}
-                            />
-                        )}
-                    </AutoSizer>
-                )
-            }}
-        </WindowScroller>
+            <Modal>
+                <EButton className={`absolute transition-all ${showCollection && "-translate-x-[340px]"} right-10 bottom-10 laptop:right-20 laptop:bottom-20 z-5 w-14 h-14 rounded-full shadow-2xl bg-white`}
+                    onClick={handleScrollTop}
+                >
+                    <FontAwesomeIcon icon={faChevronUp} />
+                </EButton>
+            </Modal>
+            <WindowScroller
+                autoContainerWidth
+                ref={windowScrollerRef}
+            >
+                {({height, scrollTop, onChildScroll}) => {
+                    return (
+                        <AutoSizer 
+                            disableHeight
+                            autoContainerWidth
+                            onResize={handleResize}
+                        >
+                            {({width}) => (
+                                <Grid
+                                    ref={ref => gridRef.current = ref}
+                                    autoContainerWidth
+                                    autoHeight
+                                    height={height}
+                                    width={width}
+                                    columnWidth={columnWidth}
+                                    columnCount={columnCount}
+                                    scrollTop={scrollTop}
+                                    onScroll={onChildScroll}
+                                    cellRenderer={handleCellRender}
+                                    rowHeight={cache.current.rowHeight}
+                                    rowCount={rowCount}
+                                />
+                            )}
+                        </AutoSizer>
+                    )
+                }}
+            </WindowScroller>
         </div>
     )
 }

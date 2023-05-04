@@ -3,6 +3,7 @@ import pagesData from "./pagesData"
 import DefaultLayout from "../layouts/DefaultLayout"
 import { FontProvider } from "../context/FontContext"
 import { FontCollectionProvider } from "../context/FontCollectionContext"
+import ScrollToTop from "../components/ScrollToTop"
 
 
 
@@ -27,9 +28,11 @@ const Router = () => {
     return (
         <FontCollectionProvider>
             <FontProvider>
-                <Routes>
+                <ScrollToTop>
+                    <Routes>
                         {pageRoutes}
-                </Routes>
+                    </Routes>
+                </ScrollToTop>
             </FontProvider>
         </FontCollectionProvider>
     )

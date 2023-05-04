@@ -47,6 +47,7 @@ const Selector = ({
     return (
         <div className="relative w-fit"
             ref={wrapperRef}
+            {...props}
         >
             <EButton className={`flex items-center justify-between p-2 text-sm min-w-[80px] hover:bg-slate-100 ${buttonClassName}`}
                 onClick={handleToggleSelector}
@@ -55,9 +56,7 @@ const Selector = ({
                 <FontAwesomeIcon className="text-xs" icon={faChevronDown}/>
             </EButton>
             {showOptions &&
-            <ul className={`bg-white shadow-md min-w-[100px] flex flex-col absolute left-0 top-10 overflow-y-auto z-20 ${className}`}
-                {...props}
-            >
+            <ul className={`bg-white shadow-md min-w-[100px] flex flex-col absolute left-0 top-10 overflow-y-auto z-20 ${className}`}>
                 {items.map((item, index) => {
                     return (
                     <SelectorOption

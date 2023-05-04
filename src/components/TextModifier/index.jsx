@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { memo } from "react"
-import Selector from "../../../../../../components/Selector"
-import { PREVIEW_MODE, DEFAULT_PARAGRAPH, DEFAULT_SENTENCE } from "../../../../../utils/FontPreview"
+import { Tooltip } from "react-tooltip"
+import Selector from "../Selector"
+import { PREVIEW_MODE, DEFAULT_SENTENCE, DEFAULT_PARAGRAPH } from "../../pages/utils/FontPreview"
 
 const TextModifier = ({
     setPreviewText,
@@ -59,16 +60,19 @@ const TextModifier = ({
     }, [resetSwitch, setPreviewText])
 
     return (
-        <div className={`h-full flex items-center grow bg-slate-50 ${isFocus && "ring-4 bg-slate-100"} border`}>
+        <div className={`h-full flex items-center bg-slate-50 ${isFocus && "ring-4 bg-slate-100"} border`}>
             {!disableModeChange &&
             <Selector
-                buttonClassName="w-[100px]"
+                data-tooltip-id="text-tooltip"
+                data-tooltip-content="Preview text"
+                buttonClassName=" text-xs laptop:text-sm w-[80px] laptop:w-[100px]"
                 items={PREVIEW_MODE}
                 displayItems={PREVIEW_MODE}
                 onSelect={handleOptionSelect}
                 currentValue={mode}
             />}
-            <input className={`outline-none pr-4 h-full grow bg-transparent ${className}`}
+            <Tooltip id="text-tooltip" />
+            <input className={`outline-none pr-4 h-full grow bg-transparent ${className} min-w-0`}
                 onChange={handleInputChange}
                 value={value}
                 onFocus={handleInputFocus}

@@ -59,26 +59,27 @@ const FilterBar = () => {
 
     console.log('rerender Filter bar')
     return (
-        <ContentLayout className="my-4 mx-4 flex gap-4">
-            <Selector
-                className="max-h-[100vh] h-[300px] overflow-y-auto min-w-[200px]"
-                buttonClassName="min-w-[110px] border gap-2"
-                optionClassName="min-h-[50px]"
-                items={LANGUAGE_CHOICE_VALUES}
-                displayItems={LANGUAGE_CHOICES}
-                onSelect={handleSelectLanguage}
-                currentValue={language}
-            />
-            <MultipleSelector
-                className="min-w-[400px]"
-                buttonClassName="min-w-[400px]"
-                items={CATEGORY_CHOICES_VALUES}
-                displayItems={CATEGORY_CHOICES}
-                onSelect={handleSelectCategory}
-                currentValues={categories}
-                noSelectedPromp="Category"
-            />
-
+        <ContentLayout>
+            <div className="my-4 flex gap-4 px-4">
+                <Selector
+                    className="max-h-[100vh] h-[300px] overflow-y-auto min-w-[200px]"
+                    buttonClassName="min-w-[110px] border gap-2"
+                    optionClassName="min-h-[50px]"
+                    items={LANGUAGE_CHOICE_VALUES}
+                    displayItems={LANGUAGE_CHOICES}
+                    onSelect={handleSelectLanguage}
+                    currentValue={language}
+                />
+                <MultipleSelector
+                    className="min-w-[400px]"
+                    buttonClassName="min-w-[400px]"
+                    items={CATEGORY_CHOICES_VALUES}
+                    displayItems={CATEGORY_CHOICES}
+                    onSelect={handleSelectCategory}
+                    currentValues={categories}
+                    noSelectedPromp="Category"
+                />
+            </div>
         </ContentLayout>
     )
 }

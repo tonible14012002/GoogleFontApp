@@ -1,8 +1,5 @@
 import { createContext, useContext, useReducer, useState } from "react";
-import fontCollectionReducer from "./FontCollectionReducer";
-import FontCollectionBar from "../../components/FontCollectionBar";
-
-
+import fontCollectionReducer from "./fontCollectionReducer";
 
 const FontCollectionContext = createContext()
 const useFontCollection = () => useContext(FontCollectionContext)
@@ -21,7 +18,6 @@ const FontCollectionProvider = ({children}) => {
                 setShowCollection
             }}
         >
-            <FontCollectionBar/>
             {children}
         </FontCollectionContext.Provider>
     )
