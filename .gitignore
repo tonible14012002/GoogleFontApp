@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-*/credentials.jsx
+# */credentials.jsx
