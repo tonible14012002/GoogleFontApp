@@ -4,7 +4,7 @@
 <!-- ABOUT THE PROJECT -->
 <br/>
 
-This a clone of [Google Fonts](https://fonts.google.com/) website, created as a learning excercise and showcase my front-end development skills to potential employers. Most of the original website's functionalities is mimicked on this one.
+This is a clone of [Google Fonts](https://fonts.google.com/) website, created as a learning excercise and showcase my front-end development skills to potential employers. Most of the original website's functionalities is mimicked on this one.
 
 * Website: https://google-font-app.vercel.app/
 
