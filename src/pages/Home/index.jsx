@@ -3,28 +3,16 @@ import FontList from "./components/FontList"
 import ToolBar from "./components/ToolBar"
 import ContentLayout from "../../components/ContentLayout"
 import FilterBar from "./components/FilterBar"
-import { useFontContext } from "../../context/FontContext"
 
 const Home = () => {
 
     const [ fontSize, setFontSize ] = useState(0)
     const [ previewText, setPreviewText ] = useState("")
-    const { fonts } = useFontContext()
-
-    let variant = []
-    fonts.map(f => {
-        f.variants.map(v => {
-            if (!variant.includes(v)) {
-                variant.push(v)
-            }
-        })
-    })
 
     useEffect(() => {
         document.title = "Home"
     }, [])
 
-    console.log('rerender Home')
     return (
         <>
             <ToolBar

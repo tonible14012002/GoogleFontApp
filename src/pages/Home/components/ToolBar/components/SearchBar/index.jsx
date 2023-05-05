@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "react-router-dom"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
-import { getQueryFromParam } from "../../../../utils/Query"
-import { useSearchParams } from "react-router-dom"
+
+import { getQueryFromParam } from "../../../../../../settings/FontFilterSetting/utils"
 import useDebounce from "../../../../../../hooks/useDebounce"
 
 const SearchBar = ({resetSwitch}) => {

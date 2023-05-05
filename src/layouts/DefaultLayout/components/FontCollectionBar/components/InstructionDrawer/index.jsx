@@ -1,7 +1,7 @@
 import EButton from "../../../../../../components/EButton"
 import { useFontCollection } from "../../../../../../context/FontCollectionContext/CollectionProvider"
 import { memo, useState } from "react"
-import { createStyleURLFromCollection } from "../../../../../../utils"
+import { createStyleURLFromCollection } from "../../../../../../googleApiUtils"
 
 const SHOW_LINK = 0
 const SHOW_IMPORT = 1

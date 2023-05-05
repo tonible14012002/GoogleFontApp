@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import * as FontServices from "../../services/fontServices";
-import { googleStyleSheetUrlGenerator } from "../../utils"
 import WelcomePage from "../../pages/WelcomePage";
+import { googleStyleSheetUrlGenerator } from "../../googleApiUtils";
 
 
 const FontContext = createContext()

@@ -1,11 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import pagesData from "./pagesData"
 import DefaultLayout from "../layouts/DefaultLayout"
-import { FontProvider } from "../context/FontContext"
-import { FontCollectionProvider } from "../context/FontCollectionContext"
-import ScrollToTop from "../components/ScrollToTop"
-
-
 
 const Router = () => {
 
@@ -26,15 +21,9 @@ const Router = () => {
     })
 
     return (
-        <FontCollectionProvider>
-            <FontProvider>
-                <ScrollToTop>
-                    <Routes>
-                        {pageRoutes}
-                    </Routes>
-                </ScrollToTop>
-            </FontProvider>
-        </FontCollectionProvider>
+        <Routes>
+            {pageRoutes}
+        </Routes>
     )
 }
 

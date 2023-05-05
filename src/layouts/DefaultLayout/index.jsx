@@ -10,7 +10,7 @@ const DefaultLayout = ({children}) => {
     return (
         <>
             <Header/>
-            <main id="content" className="flex w-full min-h-[calc(100vh-120px)]">
+            <main id="content" className="laptop:flex w-full min-h-[calc(100vh-120px)]">
                 <div className={`max-w-full flex-1 transition-all ${showCollection && "laptop:pr-[300px]"}`}>
                     {children}
                 </div>

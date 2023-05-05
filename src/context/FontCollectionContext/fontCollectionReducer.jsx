@@ -1,4 +1,4 @@
-import { extractVariantInfo } from "../../utils"
+import { extractVariantInfo } from "../../googleApiUtils"
 
 
 

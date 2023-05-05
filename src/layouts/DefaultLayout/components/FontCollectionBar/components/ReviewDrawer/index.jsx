@@ -1,5 +1,6 @@
-import { useFontCollection } from "../../../../../../context/FontCollectionContext/CollectionProvider"
 import { memo } from "react"
+
+import { useFontCollection } from "../../../../../../context/FontCollectionContext/CollectionProvider"
 import ReviewPanel from "./components/ReviewPanel"
 
 const ReviewDrawer = () => {

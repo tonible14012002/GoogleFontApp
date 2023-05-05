@@ -1,6 +1,6 @@
-import { memo, useLayoutEffect } from "react"
+import { memo } from "react"
 import EButton from "../../../../../../components/EButton"
-import { addPlusSigns } from "../../../../../../utils"
+import { addPlusSigns } from "../../../../../../googleApiUtils"
 
 const FontCard = ({
     data,
@@ -10,27 +10,16 @@ const FontCard = ({
 
     const { family, category, variants } = data
 
-    // useLayoutEffect(() => {
-    //     const link = document.createElement("link")
-    //     link.href = `https://fonts.googleapis.com/css?family=${family}`
-    //     link.rel = "stylesheet"
-    //     document.head.appendChild(link)
-    //     return () => {
-    //         document.head.removeChild(link)
-    //     }
-    // }, [family])
-
     return (
-        <>
-        {/* <Helmet> */}
-            {/* <link href={`https://fonts.googleapis.com/css?family=${family}`} rel="stylesheet" /> */}
-        {/* </Helmet> */}
-        <EButton className="hover:bg-blue-50 block w-full h-full border-2 text-left p-4 hover:shadow-lg active:opacity-50 transition-all"
+        <EButton className="hover:bg-blue-50 block w-full h-full border-2 text-left
+                p-4 hover:shadow-lg active:opacity-50 transition-all"
             to={`specimen/${addPlusSigns(family)}`}
         >
             <div className="flex justify-between">
                 <h3 className="">{family}</h3>
-                <span className="text-zinc-400 text-sm font-medium">{variants.length} styles</span>
+                <span className="text-zinc-400 text-sm font-medium">
+                    {variants.length} styles
+                </span>
             </div>
             <h3 className="text-sm opacity-60">{category}</h3>
             <p className="h-full mt-6 break-words" 
@@ -42,7 +31,6 @@ const FontCard = ({
                 {previewText}
             </p>
         </EButton>
-        </>
     )
 }
 

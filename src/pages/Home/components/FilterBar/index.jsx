@@ -1,19 +1,25 @@
 import { memo, useEffect, useRef, useState } from "react"
-import ContentLayout from "../../../../components/ContentLayout"
-import Selector from "../../../../components/Selector"
 import { useSearchParams } from "react-router-dom"
-import { 
-    getFilterLanguageFromParam,
-    LANGUAGE_CHOICES,
-    DEFAULT_LANGUAGE_FILTER_VALUE,
-    LANGUAGE_CHOICE_VALUES
-} from "../../utils/Languages"
-import EButton from "../../../../components/EButton"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
+
+import ContentLayout from "../../../../components/ContentLayout"
+import Selector from "../../../../components/Selector"
+import EButton from "../../../../components/EButton"
 import SelectorOption from "../../../../components/SelectorOption"
 import useOnClickedOutSide from "../../../../hooks/useOnClickOutside"
-import { CATEGORY_CHOICES, CATEGORY_CHOICES_VALUES, getCategoriesFromParam } from "../../utils/Category"
+import {
+    CATEGORY_CHOICES, 
+    CATEGORY_CHOICES_VALUES,
+    DEFAULT_LANGUAGE_FILTER_VALUE,
+    LANGUAGE_CHOICES,
+    LANGUAGE_CHOICE_VALUES
+} from "../../../../settings/FontFilterSetting/constants"
+import { 
+    getFilterLanguageFromParam,
+    getCategoriesFromParam
+} from "../../../../settings/FontFilterSetting/utils"
 
 const FilterBar = () => {
 
@@ -29,7 +35,6 @@ const FilterBar = () => {
         !newCategories.length ? 
         searchParams.delete("category") :
         searchParams.set("category", newCategories)
-        console.log(newCategories)
 
         setSearchParams(searchParams)
     }
@@ -57,7 +62,6 @@ const FilterBar = () => {
         }
     }, [isCategoryParamValid, setSearchParams , searchParams, categoriesString])
 
-    console.log('rerender Filter bar')
     return (
         <ContentLayout>
             <div className="my-4 flex gap-4 px-4">

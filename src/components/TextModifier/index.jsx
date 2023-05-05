@@ -2,7 +2,11 @@ import { useState, useEffect } from "react"
 import { memo } from "react"
 import { Tooltip } from "react-tooltip"
 import Selector from "../Selector"
-import { PREVIEW_MODE, DEFAULT_SENTENCE, DEFAULT_PARAGRAPH } from "../../pages/utils/FontPreview"
+import {
+    PREVIEW_MODE,
+    DEFAULT_PARAGRAPH,
+    DEFAULT_SENTENCE
+} from "../../settings/FontPreviewSetting/constants"
 
 const TextModifier = ({
     setPreviewText,

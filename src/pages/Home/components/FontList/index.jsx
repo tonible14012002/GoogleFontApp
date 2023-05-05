@@ -1,17 +1,26 @@
-import { useFontContext } from "../../../../context/FontContext"
-import { useSearchParams } from "react-router-dom"
 import { useMemo, memo, useRef, useLayoutEffect, useState, useCallback } from "react"
-
+import { useSearchParams } from "react-router-dom"
 import { AutoSizer, CellMeasurer, CellMeasurerCache, Grid, WindowScroller } from "react-virtualized"
-import FontCard from "./components/FontCard"
-import { DEFAULT_LANGUAGE_FILTER_VALUE, getFilterLanguageFromParam } from "../../utils/Languages"
-import { CATEGORY_CHOICES_VALUES, getCategoriesFromParam } from "../../utils/Category";
-import { getQueryFromParam } from "../../utils/Query"
-import EButton from "../../../../components/EButton"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons"
+
+import FontCard from "./components/FontCard"
+import EButton from "../../../../components/EButton"
 import Modal from "../../../../components/Modal"
+
 import { useFontCollection } from "../../../../context/FontCollectionContext/CollectionProvider"
+import { useFontContext } from "../../../../context/FontContext"
+import { 
+    CATEGORY_CHOICES_VALUES,
+    DEFAULT_LANGUAGE_FILTER_VALUE
+} from "../../../../settings/FontFilterSetting/constants"
+
+import { 
+    getFilterLanguageFromParam,
+    getCategoriesFromParam,
+    getQueryFromParam
+} from "../../../../settings/FontFilterSetting/utils"
 
 const FontList = ({
     fontSize=20,

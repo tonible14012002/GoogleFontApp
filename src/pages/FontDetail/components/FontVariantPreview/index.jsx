@@ -4,7 +4,7 @@ import EButton from "../../../../components/EButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons"
 import { useFontCollection } from "../../../../context/FontCollectionContext/CollectionProvider"
-import { extractVariantInfo, variantToStyleName } from "../../../../utils"
+import { extractVariantInfo, variantToStyleName } from "../../../../googleApiUtils"
 
 const FontVariantPreview = ({
     previewText,

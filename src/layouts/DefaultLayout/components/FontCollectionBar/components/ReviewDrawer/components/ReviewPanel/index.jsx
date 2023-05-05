@@ -14,8 +14,6 @@ const ReviewPanel = ({family}) => {
         setShowItems(prev => !prev)
     }
 
-    console.log("Review Panel")
-
     return (
         <div className="border">
             <EButton className="flex items-center justify-between w-full p-4 hover:bg-slate-50"

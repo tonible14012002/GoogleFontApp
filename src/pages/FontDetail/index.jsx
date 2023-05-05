@@ -1,13 +1,15 @@
-import { useParams } from "react-router-dom"
-import { useFontContext } from "../../context/FontContext"
 import { useLayoutEffect, useEffect, useMemo, useState } from "react"
+import { useParams } from "react-router-dom"
+
+import { useFontContext } from "../../context/FontContext"
 import EButton from "../../components/EButton"
 import ContentLayout from "../../components/ContentLayout"
 import FontVariantPreview from "./components/FontVariantPreview"
 import TextModifier from "../../components/TextModifier"
 import SizeModifier from "../../components/SizeModifier"
-import { DEFAULT_SENTENCE } from "../utils/FontPreview"
 import ToggleSideBarButton from "../../components/ToggleSideBarButton"
+
+import { DEFAULT_SENTENCE } from "../../settings/FontPreviewSetting/constants"
 
 const FontDetail = () => {
 
@@ -31,6 +33,8 @@ const FontDetail = () => {
     const [ previewText, setPreviewText ] = useState(DEFAULT_SENTENCE)
 
     useLayoutEffect(() => {
+        window.scrollTo({top: 0})
+
         const link = document.createElement('link')
         link.href = styleUrl
         link.rel = "stylesheet"

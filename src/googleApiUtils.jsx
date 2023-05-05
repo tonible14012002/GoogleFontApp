@@ -1,6 +1,7 @@
 const BASE_URL = "https://fonts.googleapis.com/css?family="
 const BASE_URL_V2 = "https://fonts.googleapis.com/css2?"
 const MAX_URL_LENGTH = 2048
+
 const numToFontWeightName = {
     "100": "Thin",
     "200": "Extra Light",
@@ -18,7 +19,8 @@ const extractVariantInfo = (variant) => {
     const fontStyle = variant.includes("italic")? "italic": ""
     let fontWeight = fontStyle ? variant.replace("italic", "") : variant
     if (fontWeight === "regular"
-        || fontWeight === "") {
+        || fontWeight === "")
+    {
         fontWeight = "400"
     }
     return {
@@ -67,7 +69,6 @@ const googleStyleSheetUrlGenerator = (fonts) => {
     }
     return paramsList 
 }
-
 
 const createStyleURLFromCollection = (collection) => {
     let params = []

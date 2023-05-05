@@ -2,7 +2,10 @@ import { Tooltip } from "react-tooltip"
 
 import { useEffect, useState } from "react"
 import Selector from "../Selector"
-import { SIZE_CHOICES_VALUE, DEFAULT_SIZE_CHOICE } from "../../pages/utils/FontPreview"
+import { 
+    SIZE_CHOICES_VALUE,
+    DEFAULT_SIZE_CHOICE 
+} from "../../settings/FontPreviewSetting/constants"
 
 const SizeModifier = ({setValue: setFontSize, resetSwitch}) => {
 
