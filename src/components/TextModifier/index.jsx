@@ -26,8 +26,9 @@ const TextModifier = ({
     setIsFocus(false)
   }
 
-  const handleOptionSelect = (value) => {
+  const handleOptionPress = (modeValue) => {
     setValue('')
+    setMode(modeValue)
     switch (value) {
       case PREVIEW_MODE[0]:
         setPreviewText('')
@@ -63,8 +64,7 @@ const TextModifier = ({
 
   return (
     <div
-      className={`h-full flex items-center bg-slate-50 ${isFocus && 'ring-4 bg-slate-100'} border`}
-    >
+      className={`h-full flex items-center bg-slate-50 ${isFocus && 'ring-4 bg-slate-100'} border`}>
       {!disableModeChange && (
         <Selector
           data-tooltip-id="text-tooltip"
@@ -72,10 +72,11 @@ const TextModifier = ({
           buttonClassName=" text-xs laptop:text-sm w-[80px] laptop:w-[100px]"
           items={PREVIEW_MODE}
           displayItems={PREVIEW_MODE}
-          onSelect={handleOptionSelect}
+          onSelect={handleOptionPress}
           currentValue={mode}
         />
       )}
+      {console.log(mode)}
       <Tooltip id="text-tooltip" />
       <input
         className={`outline-none pr-4 h-full grow bg-transparent ${className} min-w-0`}
