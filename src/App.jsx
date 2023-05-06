@@ -1,19 +1,18 @@
-import { BrowserRouter } from "react-router-dom"
-import Router from "./pages/routes"
+import { BrowserRouter } from 'react-router-dom'
+import Router from './pages/routes'
 import 'react-tooltip/dist/react-tooltip.css'
-import { FontProvider } from "./context/FontContext"
-import { FontCollectionProvider } from "./context/FontCollectionContext"
+import { FontProvider } from './context/FontContext'
+import { FontCollectionProvider } from './context/FontCollectionContext'
 
 function App() {
-  
   return (
-      <FontCollectionProvider>
-        <FontProvider>
-          <BrowserRouter>
-              <Router/>
-          </BrowserRouter>
-        </FontProvider>
-      </FontCollectionProvider>
+    <FontCollectionProvider>
+      <FontProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </FontProvider>
+    </FontCollectionProvider>
   )
 }
 

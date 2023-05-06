@@ -1,33 +1,26 @@
-import { useEffect, useState } from "react"
-import FontList from "./components/FontList"
-import ToolBar from "./components/ToolBar"
-import ContentLayout from "../../components/ContentLayout"
-import FilterBar from "./components/FilterBar"
+import { useEffect, useState } from 'react'
+import FontList from './components/FontList'
+import ToolBar from './components/ToolBar'
+import ContentLayout from '../../components/ContentLayout'
+import FilterBar from './components/FilterBar'
 
 const Home = () => {
+  const [fontSize, setFontSize] = useState(0)
+  const [previewText, setPreviewText] = useState('')
 
-    const [ fontSize, setFontSize ] = useState(0)
-    const [ previewText, setPreviewText ] = useState("")
+  useEffect(() => {
+    document.title = 'Home'
+  }, [])
 
-    useEffect(() => {
-        document.title = "Home"
-    }, [])
-
-    return (
-        <>
-            <ToolBar
-                setPreviewText={setPreviewText}
-                setFontSize={setFontSize}
-            />
-            <FilterBar/>
-            <ContentLayout>
-                <FontList
-                    fontSize={fontSize}
-                    previewText={previewText}
-                />
-            </ContentLayout>
-        </>
-    )
+  return (
+    <>
+      <ToolBar setPreviewText={setPreviewText} setFontSize={setFontSize} />
+      <FilterBar />
+      <ContentLayout>
+        <FontList fontSize={fontSize} previewText={previewText} />
+      </ContentLayout>
+    </>
+  )
 }
 
 export default Home

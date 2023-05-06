@@ -1,3 +1,3 @@
-import { useFontCollection, FontCollectionProvider } from "./CollectionProvider";
+import { useFontCollection, FontCollectionProvider } from './CollectionProvider'
 
 export { useFontCollection, FontCollectionProvider }
