@@ -1,22 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import { getQueryFromParam } from '../../../../../../settings/FontFilterSetting/utils'
-import useDebounce from '../../../../../../hooks/useDebounce'
 
 const SearchBar = ({ resetSwitch }) => {
   const [isFocus, setIsFocus] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const [query] = getQueryFromParam(searchParams)
   const [value, setValue] = useState(query.replace('+', ' '))
-  const debouncedValue = useDebounce(value, 300)
-  const ignoreDebounce = useRef(false)
+  const isTouched = useRef(false)
 
   const handleInputChange = (e) => {
     setValue(e.target.value)
+    isTouched.current = true
   }
 
   const handleFocus = () => {
@@ -27,30 +26,26 @@ const SearchBar = ({ resetSwitch }) => {
   }
 
   useEffect(() => {
+    // reset available only when search touched
+    if (!isTouched.current) return
     setValue('')
-    ignoreDebounce.current = true
   }, [resetSwitch])
 
   useEffect(() => {
-    if (ignoreDebounce.current) {
-      ignoreDebounce.current = false
-      return
-    }
-    if (query !== debouncedValue) {
-      debouncedValue
-        ? searchParams.set('query', debouncedValue.replace(' ', '+').toLowerCase())
+    const timerId = setTimeout(() => {
+      value
+        ? searchParams.set('query', value.replace(' ', '+').toLowerCase())
         : searchParams.delete('query')
-
       setSearchParams(searchParams)
-    }
-  }, [debouncedValue, searchParams, setSearchParams, query])
+    }, 300)
+    return () => clearTimeout(timerId)
+  }, [value, searchParams, setSearchParams])
 
   return (
     <div
       className={`${
         isFocus && 'ring-4 bg-slate-100'
-      } border bg-slate-50 transition-all flex items-center relative h-[50px] flex-1`}
-    >
+      } border bg-slate-50 transition-all flex items-center relative h-[50px] flex-1`}>
       <span className="block absolute w-10 text-zinc-400">
         <FontAwesomeIcon className="block mx-auto" icon={faSearch} />
       </span>
@@ -65,4 +60,4 @@ const SearchBar = ({ resetSwitch }) => {
   )
 }
 
-export default SearchBar
+export default memo(SearchBar)
