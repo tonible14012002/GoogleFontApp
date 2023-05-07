@@ -29,7 +29,7 @@ const TextModifier = ({
   const handleOptionPress = (modeValue) => {
     setValue('')
     setMode(modeValue)
-    switch (value) {
+    switch (modeValue) {
       case PREVIEW_MODE[0]:
         setPreviewText('')
         break
