@@ -1,9 +1,30 @@
-import { memo } from 'react'
-import EButton from '../../../../../../components/EButton'
-import { addPlusSigns } from '../../../../../../googleApiUtils'
+import { memo, useEffect, useState } from 'react'
+import FontFaceObserver from 'fontfaceobserver'
 
-const FontCard = ({ data, previewText, fontSize = 14 }) => {
+import { addPlusSigns } from '../../../../../../googleApiUtils'
+import EButton from '../../../../../../components/EButton'
+
+const FontCard = ({ data, previewText, fontSize = 14, clearCellCache }) => {
   const { family, category, variants } = data
+  const [fontLoaded, setFontLoaded] = useState(false)
+  const handleLoadFont = () => {
+    if (fontLoaded) {
+      return
+    }
+    const checkFont = async () => {
+      const font = new FontFaceObserver(family)
+      try {
+        await font.load()
+        setFontLoaded(true)
+        clearCellCache()
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    checkFont()
+  }
+
+  useEffect(handleLoadFont, [clearCellCache, family, fontLoaded])
 
   return (
     <EButton
@@ -16,7 +37,9 @@ const FontCard = ({ data, previewText, fontSize = 14 }) => {
       </div>
       <h3 className="text-sm opacity-60">{category}</h3>
       <p
-        className="h-full mt-6 break-words"
+        className={`h-full mt-6 break-words transition-opacity duration-300 ${
+          !fontLoaded && 'opacity-0'
+        }`}
         style={{
           fontSize,
           fontFamily: family

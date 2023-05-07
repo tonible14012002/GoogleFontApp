@@ -56,8 +56,7 @@ const FontDetail = () => {
                             hover:bg-slate-100 active:opacity-70 transition-all text-blue-500"
                 onClick={() => {
                   alert('This feature will be done soon')
-                }}
-              >
+                }}>
                 Download family
               </EButton>
               <ToggleSideBarButton className="w-[50px] h-[50px]" />

@@ -1,4 +1,4 @@
-import { useMemo, memo, useRef, useLayoutEffect, useState, useCallback } from 'react'
+import { useMemo, memo, useRef, useState, useCallback, useLayoutEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, Grid, WindowScroller } from 'react-virtualized'
 
@@ -27,7 +27,6 @@ const FontList = ({ fontSize = 20, previewText }) => {
   const { showCollection } = useFontCollection()
 
   const gridRef = useRef()
-  const windowScrollerRef = useRef()
   const [columnCount, setColumnCount] = useState(3)
   const [columnWidth, setColumnWidth] = useState(400)
 
@@ -87,11 +86,6 @@ const FontList = ({ fontSize = 20, previewText }) => {
     setColumnWidth(width)
   }, [])
 
-  const handleUpdateCache = () => {
-    cache.current.clearAll()
-    gridRef.current && gridRef.current.recomputeGridSize()
-  }
-
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -108,13 +102,30 @@ const FontList = ({ fontSize = 20, previewText }) => {
         key={key}
         parent={parent}>
         <div style={style} className="p-4 min-h-[300px]">
-          <FontCard data={fontData} previewText={previewText} fontSize={fontSize} />
+          <FontCard
+            data={fontData}
+            previewText={previewText}
+            fontSize={fontSize}
+            clearCellCache={handleClearCellCache}
+            rowIndex={rowIndex}
+            columnIndex={columnIndex}
+          />
         </div>
       </CellMeasurer>
     )
   }
 
-  useLayoutEffect(handleUpdateCache)
+  const handleClearCellCache = useCallback(() => {
+    cache.current.clearAll()
+  }, [])
+
+  const handleUpdateCellCache = () => {
+    cache.current.clearAll()
+    gridRef.current && gridRef.current.recomputeGridSize()
+  }
+  useLayoutEffect(handleUpdateCellCache, [previewText, fontSize, columnCount, columnWidth])
+
+  console.log('render')
   return (
     <div className="w-full mb-14">
       <Modal>
@@ -126,7 +137,7 @@ const FontList = ({ fontSize = 20, previewText }) => {
           <FontAwesomeIcon icon={faChevronUp} />
         </EButton>
       </Modal>
-      <WindowScroller autoContainerWidth ref={windowScrollerRef}>
+      <WindowScroller autoContainerWidth>
         {({ height, scrollTop, onChildScroll }) => {
           return (
             <AutoSizer disableHeight autoContainerWidth onResize={handleResize}>

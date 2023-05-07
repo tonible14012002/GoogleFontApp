@@ -17,8 +17,7 @@ const ReviewPanel = ({ family }) => {
     <div className="border">
       <EButton
         className="flex items-center justify-between w-full p-4 hover:bg-slate-50"
-        onClick={handleToggleShowItems}
-      >
+        onClick={handleToggleShowItems}>
         <h3 className="text-blue-600">{family}</h3>
         <span className="text-sm">
           <FontAwesomeIcon icon={faChevronDown} />
@@ -28,8 +27,7 @@ const ReviewPanel = ({ family }) => {
         className="px-4 text-zinc-600 overflow-hidden transition-all"
         style={{
           height: showItems ? collection[family]['variants'].length * 40 : 0
-        }}
-      >
+        }}>
         {collection[family]['variants'].map((variant) => (
           <ReviewItem key={variant} family={family} variant={variant} />
         ))}

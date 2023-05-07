@@ -92,7 +92,6 @@ const createStyleURLFromCollection = (collection) => {
     familyParams = familyPrefix + prefix + styleOptions.map((op) => op.join(',')).join(';')
     params.push(familyParams)
   }
-  console.log(BASE_URL_V2 + params.join('&'))
   return BASE_URL_V2 + params.join('&')
 }
 
@@ -102,5 +101,6 @@ export {
   extractVariantInfo,
   numToFontWeightName,
   variantToStyleName,
-  createStyleURLFromCollection
+  createStyleURLFromCollection,
+  BASE_URL_V2
 }

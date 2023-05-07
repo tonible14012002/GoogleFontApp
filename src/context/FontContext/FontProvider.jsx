@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import * as FontServices from '../../services/fontServices'
 import WelcomePage from '../../pages/WelcomePage'
 import { googleStyleSheetUrlGenerator } from '../../googleApiUtils'
@@ -13,14 +13,14 @@ const FontProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
-  const params = useMemo(() => googleStyleSheetUrlGenerator(fonts || []), [fonts])
-
   const handleGetFonts = () => {
     const fetchFonts = async () => {
       setLoading(true)
       const result = await FontServices.getFonts()
       if (result.status === 'ok') {
-        setFonts(result.data.items)
+        const fontsData = result.data.items
+        setFonts(fontsData)
+        handleLoadFontStyle(googleStyleSheetUrlGenerator(fontsData))
       } else {
         setError(true)
       }
@@ -29,7 +29,7 @@ const FontProvider = ({ children }) => {
     fetchFonts()
   }
 
-  const handleLoadFontStyle = () => {
+  const handleLoadFontStyle = (params) => {
     const links = params.map((param) => {
       const link = document.createElement('link')
       link.href = BASE + param
@@ -40,7 +40,6 @@ const FontProvider = ({ children }) => {
     links.forEach((link) => document.head.appendChild(link))
   }
 
-  useEffect(handleLoadFontStyle, [params])
   useEffect(handleGetFonts, [])
 
   return (
