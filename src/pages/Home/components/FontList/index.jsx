@@ -123,9 +123,14 @@ const FontList = ({ fontSize = 20, previewText }) => {
     cache.current.clearAll()
     gridRef.current && gridRef.current.recomputeGridSize()
   }
-  useLayoutEffect(handleUpdateCellCache, [previewText, fontSize, columnCount, columnWidth])
+  useLayoutEffect(handleUpdateCellCache, [
+    previewText,
+    fontSize,
+    columnCount,
+    columnWidth,
+    filteredFonts
+  ])
 
-  console.log('render')
   return (
     <div className="w-full mb-14">
       <Modal>
