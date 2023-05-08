@@ -10,8 +10,21 @@ const getFonts = async () => {
     }))
     .catch((error) => ({
       status: 'error',
-      error: error
+      error: error.data
     }))
 }
 
-export { getFonts }
+const getFontVariantFile = async (fileUrl) => {
+  return axios
+    .get(fileUrl, { responseType: 'blob' })
+    .then((result) => ({
+      status: 'ok',
+      data: result.data
+    }))
+    .catch((error) => ({
+      status: 'error',
+      error: error.data
+    }))
+}
+
+export { getFonts, getFontVariantFile }

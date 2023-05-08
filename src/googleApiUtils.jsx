@@ -1,5 +1,5 @@
-const BASE_URL = 'https://fonts.googleapis.com/css?family='
-const BASE_URL_V2 = 'https://fonts.googleapis.com/css2?'
+const BASE_URL = 'https://fonts.googleapis.com/css'
+const BASE_URL_V2 = 'https://fonts.googleapis.com/css2'
 const MAX_URL_LENGTH = 2048
 
 const numToFontWeightName = {
@@ -12,7 +12,8 @@ const numToFontWeightName = {
   700: 'Bold',
   800: 'Extra Bold',
   900: 'Black',
-  regular: 'Regular'
+  regular: 'Regular',
+  '': 'Regular'
 }
 
 const extractVariantInfo = (variant) => {
@@ -29,17 +30,19 @@ const extractVariantInfo = (variant) => {
 
 const variantToStyleName = (variant) => {
   const fontStyleName = variant.includes('italic') ? 'Italic' : ''
-  let fontWeightNum = fontStyleName ? variant.replace('italic', '') : variant
+  let fontWeight = fontStyleName ? variant.replace('italic', '') : variant
 
   return {
-    fontWeightName: numToFontWeightName[fontWeightNum],
+    fontWeightName: numToFontWeightName[fontWeight],
     fontStyleName
   }
 }
 
 const addPlusSigns = (familyName) => familyName.replace(/ /g, '+')
 
-const googleStyleSheetUrlGenerator = (fonts) => {
+const removePlusSigns = (family) => family.replace(/\+/g, ' ')
+
+const getFontStyleSheetUrls = (fonts) => {
   let currentIndex = 0
   const paramsList = []
 
@@ -62,45 +65,66 @@ const googleStyleSheetUrlGenerator = (fonts) => {
       paramsList.push(params)
     }
   }
-  return paramsList
+  return paramsList.map((params) => BASE_URL + '?family=' + params)
 }
 
 const createStyleURLFromCollection = (collection) => {
   let params = []
 
   for (let family in collection) {
+    const variants = Object.keys(collection[family]['variants'])
+
     const familyPrefix = 'family=' + addPlusSigns(family)
-    const hasItalic = collection[family]['variants'].reduce((checkedVariant, variant) => {
+    const hasItalic = variants.reduce((checkedVariant, variant) => {
       return checkedVariant || variant.includes('italic')
     }, false)
 
     let familyParams
     const prefix = hasItalic ? ':ital,wght@' : ':wght@'
 
-    const styleOptions = collection[family]['variants'].map((variant) => {
+    const styleOptions = variants.map((variant) => {
       const { fontWeight, fontStyle } = extractVariantInfo(variant)
       return hasItalic ? [fontStyle ? 1 : 0, fontWeight] : [fontWeight]
     })
     styleOptions.sort((op, nextOp) => {
       if (hasItalic) {
-        return op[0] === nextOp[0] ? op[1] - nextOp[1] : op[0] - op[1]
+        return op[0] === nextOp[0] ? op[1] - nextOp[1] : op[0] - nextOp[0]
       } else {
-        return parseInt(op[1]) - parseInt(nextOp[1])
+        return op[0] - nextOp[0]
       }
     })
 
     familyParams = familyPrefix + prefix + styleOptions.map((op) => op.join(',')).join(';')
     params.push(familyParams)
   }
-  return BASE_URL_V2 + params.join('&')
+  return BASE_URL_V2 + '?' + params.join('&')
+}
+
+const getAllVariantStyleUrl = (font) => {
+  let url = BASE_URL + '?family=' + addPlusSigns(font.family)
+  const variantParams = font.variants.join(',')
+  if (variantParams) {
+    url += ':' + variantParams
+  }
+  url += '&font-display:swap'
+  return url
+}
+
+const createFileName = (family, variant) => {
+  const { fontWeightName, fontStyleName } = variantToStyleName(variant)
+  return (family + fontWeightName + fontStyleName).replace(/ /g, '') + '.ttf'
 }
 
 export {
   addPlusSigns,
-  googleStyleSheetUrlGenerator,
+  removePlusSigns,
+  getFontStyleSheetUrls,
   extractVariantInfo,
   numToFontWeightName,
   variantToStyleName,
   createStyleURLFromCollection,
-  BASE_URL_V2
+  getAllVariantStyleUrl,
+  BASE_URL,
+  BASE_URL_V2,
+  createFileName
 }

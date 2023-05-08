@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReviewItem from '../ReviewItem'
 import { memo, useState } from 'react'
 import { useFontCollection } from '../../../../../../../../context/FontCollectionContext/CollectionProvider'
+import { extractVariantInfo } from '../../../../../../../../googleApiUtils'
 
 const ReviewPanel = ({ family }) => {
   const { collection } = useFontCollection()
@@ -13,11 +14,23 @@ const ReviewPanel = ({ family }) => {
     setShowItems((prev) => !prev)
   }
 
+  const variants = Object.keys(collection[family]['variants'])
+
+  variants.sort((variantL, variantR) => {
+    const { fontWeight: fontWeightL, fontStyle: fontStyleL } = extractVariantInfo(variantL)
+    const { fontWeight: fontWeightR, fontStyle: fontStyleR } = extractVariantInfo(variantR)
+    if (fontStyleL === fontStyleR) {
+      return fontWeightL - fontWeightR
+    }
+    return fontStyleL ? 1 : -1
+  })
+
   return (
     <div className="border">
       <EButton
         className="flex items-center justify-between w-full p-4 hover:bg-slate-50"
-        onClick={handleToggleShowItems}>
+        onClick={handleToggleShowItems}
+      >
         <h3 className="text-blue-600">{family}</h3>
         <span className="text-sm">
           <FontAwesomeIcon icon={faChevronDown} />
@@ -26,9 +39,10 @@ const ReviewPanel = ({ family }) => {
       <ul
         className="px-4 text-zinc-600 overflow-hidden transition-all"
         style={{
-          height: showItems ? collection[family]['variants'].length * 40 : 0
-        }}>
-        {collection[family]['variants'].map((variant) => (
+          height: showItems ? variants.length * 40 : 0
+        }}
+      >
+        {variants.map((variant) => (
           <ReviewItem key={variant} family={family} variant={variant} />
         ))}
       </ul>

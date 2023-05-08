@@ -34,7 +34,6 @@ const ToolBar = ({ setPreviewText, setFontSize }) => {
               onClick={handleResetPress}
             >
               <FontAwesomeIcon icon={faRotateLeft} />
-              <Tooltip id="reset-tooltip" />
             </EButton>
             <ToggleSideBarButton className="w-[50px] h-[50px] laptop:hidden" />
           </div>

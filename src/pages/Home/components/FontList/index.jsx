@@ -100,7 +100,8 @@ const FontList = ({ fontSize = 20, previewText }) => {
         columnIndex={columnIndex}
         rowIndex={rowIndex}
         key={key}
-        parent={parent}>
+        parent={parent}
+      >
         <div style={style} className="p-4 min-h-[300px]">
           <FontCard
             data={fontData}
@@ -138,7 +139,8 @@ const FontList = ({ fontSize = 20, previewText }) => {
           className={`absolute transition-all ${
             showCollection && '-translate-x-[340px]'
           } right-10 bottom-10 laptop:right-20 laptop:bottom-20 z-5 w-14 h-14 rounded-full shadow-2xl bg-white`}
-          onClick={handleScrollTop}>
+          onClick={handleScrollTop}
+        >
           <FontAwesomeIcon icon={faChevronUp} />
         </EButton>
       </Modal>

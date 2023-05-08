@@ -27,7 +27,8 @@ const ReviewItem = ({ family, variant }) => {
       </span>
       <EButton
         className="hover:bg-blue-100 w-8 h-8 rounded-full transition-colors"
-        onClick={handleToggleVariant}>
+        onClick={handleToggleVariant}
+      >
         <FontAwesomeIcon icon={faMinus} />
       </EButton>
     </div>

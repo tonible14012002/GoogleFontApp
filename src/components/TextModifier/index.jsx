@@ -64,7 +64,8 @@ const TextModifier = ({
 
   return (
     <div
-      className={`h-full flex items-center bg-slate-50 ${isFocus && 'ring-4 bg-slate-100'} border`}>
+      className={`h-full flex items-center bg-slate-50 ${isFocus && 'ring-4 bg-slate-100'} border`}
+    >
       {!disableModeChange && (
         <Selector
           data-tooltip-id="text-tooltip"
@@ -76,7 +77,6 @@ const TextModifier = ({
           currentValue={mode}
         />
       )}
-      {console.log(mode)}
       <Tooltip id="text-tooltip" />
       <input
         className={`outline-none pr-4 h-full grow bg-transparent ${className} min-w-0`}

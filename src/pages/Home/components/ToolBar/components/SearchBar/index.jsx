@@ -11,11 +11,11 @@ const SearchBar = ({ resetSwitch }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [query] = getQueryFromParam(searchParams)
   const [value, setValue] = useState(query.replace('+', ' '))
-  const isTouched = useRef(false)
+  const disableReset = useRef(true)
 
   const handleInputChange = (e) => {
     setValue(e.target.value)
-    isTouched.current = true
+    disableReset.current = false
   }
 
   const handleFocus = () => {
@@ -26,8 +26,12 @@ const SearchBar = ({ resetSwitch }) => {
   }
 
   useEffect(() => {
+    console.log(resetSwitch)
     // reset available only when search touched
-    if (!isTouched.current) return
+    if (disableReset.current) {
+      disableReset.current = false
+      return
+    }
     setValue('')
   }, [resetSwitch])
 
@@ -45,7 +49,8 @@ const SearchBar = ({ resetSwitch }) => {
     <div
       className={`${
         isFocus && 'ring-4 bg-slate-100'
-      } border bg-slate-50 transition-all flex items-center relative h-[50px] flex-1`}>
+      } border bg-slate-50 transition-all flex items-center relative h-[50px] flex-1`}
+    >
       <span className="block absolute w-10 text-zinc-400">
         <FontAwesomeIcon className="block mx-auto" icon={faSearch} />
       </span>

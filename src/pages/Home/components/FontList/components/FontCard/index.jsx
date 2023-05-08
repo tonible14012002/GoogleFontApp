@@ -7,18 +7,19 @@ import EButton from '../../../../../../components/EButton'
 const FontCard = ({ data, previewText, fontSize = 14, clearCellCache }) => {
   const { family, category, variants } = data
   const [fontLoaded, setFontLoaded] = useState(false)
+
   const handleLoadFont = () => {
     if (fontLoaded) {
       return
     }
     const checkFont = async () => {
-      const font = new FontFaceObserver(family)
+      const fontObserver = new FontFaceObserver(family)
       try {
-        await font.load()
+        await fontObserver.load(null, 7000)
         setFontLoaded(true)
         clearCellCache()
       } catch (e) {
-        console.log(e)
+        console.log('error load', family)
       }
     }
     checkFont()
@@ -30,7 +31,8 @@ const FontCard = ({ data, previewText, fontSize = 14, clearCellCache }) => {
     <EButton
       className="hover:bg-blue-50 block w-full h-full border-2 text-left
                 p-4 hover:shadow-lg active:opacity-50 transition-all"
-      to={`specimen/${addPlusSigns(family)}`}>
+      to={`specimen/${addPlusSigns(family)}`}
+    >
       <div className="flex justify-between">
         <h3 className="">{family}</h3>
         <span className="text-zinc-400 text-sm font-medium">{variants.length} styles</span>
@@ -43,7 +45,8 @@ const FontCard = ({ data, previewText, fontSize = 14, clearCellCache }) => {
         style={{
           fontSize,
           fontFamily: family
-        }}>
+        }}
+      >
         {previewText}
       </p>
     </EButton>
